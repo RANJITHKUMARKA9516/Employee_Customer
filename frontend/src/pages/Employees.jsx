@@ -1,30 +1,43 @@
-import { useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import SearchBar from "../components/employees/SearchBar";
 import EmployeeTable from "../components/employees/EmployeeTable";
-import employeeData from "../data/employeeData";
+import { getEmployees } from "../services/employeeService";
 
 function Employees() {
+  const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredEmployees = useMemo(() => {
-    const search = searchTerm.trim().toLowerCase();
+  useEffect(() => {
+    loadEmployees();
+  }, []);
 
-    if (!search) return employeeData;
+  async function loadEmployees() {
+    try {
+      const data = await getEmployees();
+      setEmployees(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
-    return employeeData.filter((employee) =>
-      [employee.name, employee.email, employee.department].some((field) =>
-        field.toLowerCase().includes(search)
-      )
+  const filteredEmployees = employees.filter((employee) => {
+    const search = searchTerm.toLowerCase();
+
+    return (
+      employee.name.toLowerCase().includes(search) ||
+      employee.email.toLowerCase().includes(search) ||
+      employee.department.toLowerCase().includes(search)
     );
-  }, [searchTerm]);
+  });
 
   return (
     <>
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">Employees</h1>
+
           <p className="mt-2 text-gray-500">
             Manage all employees in your organization.
           </p>
@@ -32,7 +45,7 @@ function Employees() {
 
         <Link
           to="/employees/add"
-          className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
+          className="rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
         >
           + Add Employee
         </Link>

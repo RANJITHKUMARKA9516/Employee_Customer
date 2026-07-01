@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+   
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -136,7 +137,7 @@ STATIC_URL = 'static/'
 
 
 CORS_ALLOWED_ORIGINS = [
-    os.getenv("FRONTEND_URL"),
+     "http://localhost:5173",
 ]
 
 
