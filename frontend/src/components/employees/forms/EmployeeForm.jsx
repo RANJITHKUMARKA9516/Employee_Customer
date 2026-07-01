@@ -1,30 +1,28 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { createEmployee } from "../../../services/employeeService";
 
-function EmployeeForm() {
+function EmployeeForm({
+  initialData = null,
+  onSubmitForm,
+  buttonText = "Save Employee",
+}) {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  register,
+  handleSubmit,
+  reset,
+  formState: { errors },
+} = useForm();
   const navigate = useNavigate();
-
-  const onSubmit = async (data) => {
-  try {
-    await createEmployee(data);
-
-    alert("Employee created successfully.");
-
-    navigate("/employees");
-  } catch (error) {
-    console.error("API Error:", error);
-    console.log("Response:", error.response);
-
-    alert(
-    JSON.stringify(error.response?.data ?? "Unknown error")
-  );
+  useEffect(() => {
+  if (initialData) {
+    reset(initialData);
   }
+}, [initialData, reset]);
+
+ const onSubmit = async (data) => {
+  await onSubmitForm(data);
 };
 
   return (
@@ -127,7 +125,7 @@ function EmployeeForm() {
         type="submit"
         className="rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
       >
-        Save Employee
+        {buttonText}
       </button>
     </form>
   );
