@@ -30,7 +30,7 @@ function EmployeeRow({ employee }) {
       </td>
 
       <td className="p-4">
-        <EmployeeActions />
+        <EmployeeActions id={employee.id} />
       </td>
     </tr>
   );

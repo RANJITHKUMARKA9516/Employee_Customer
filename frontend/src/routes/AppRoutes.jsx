@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 
 import AddEmployee from "../pages/AddEmployee";
+import EditEmployee from "../pages/EditEmployee";
 
 function AppRoutes() {
   return (
@@ -21,6 +22,11 @@ function AppRoutes() {
           <Route path="/employees" element={<Employees />} />
 
           <Route path="/employees/add" element={<AddEmployee />} />
+
+          <Route
+                path="/employees/edit/:id"
+                        element={<EditEmployee />}
+                                        />
 
           <Route path="/departments" element={<Departments />} />
 

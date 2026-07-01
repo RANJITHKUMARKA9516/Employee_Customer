@@ -1,4 +1,6 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { createEmployee } from "../../../services/employeeService";
 
 function EmployeeForm() {
   const {
@@ -6,10 +8,24 @@ function EmployeeForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const navigate = useNavigate();
 
-  const onSubmit = (data) => {
-    console.log("Employee Data:", data);
-  };
+  const onSubmit = async (data) => {
+  try {
+    await createEmployee(data);
+
+    alert("Employee created successfully.");
+
+    navigate("/employees");
+  } catch (error) {
+    console.error("API Error:", error);
+    console.log("Response:", error.response);
+
+    alert(
+    JSON.stringify(error.response?.data ?? "Unknown error")
+  );
+  }
+};
 
   return (
     <form
@@ -61,6 +77,25 @@ function EmployeeForm() {
         <label className="mb-2 block font-medium">
           Department
         </label>
+        <div>
+  <label className="mb-2 block font-medium">
+    Designation
+  </label>
+
+  <input
+    {...register("designation", {
+      required: "Designation is required",
+    })}
+    className="w-full rounded-lg border p-3"
+    placeholder="Enter designation"
+  />
+
+  {errors.designation && (
+    <p className="mt-1 text-sm text-red-600">
+      {errors.designation.message}
+    </p>
+  )}
+</div>
 
         <select
           {...register("department")}

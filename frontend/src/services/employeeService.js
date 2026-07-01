@@ -1,8 +1,21 @@
-import axios from "axios";
-
-const API_URL = "http://127.0.0.1:8000/api/employees/";
+import api from "../api/axios";
 
 export async function getEmployees() {
-  const response = await axios.get(API_URL);
+  const response = await api.get("/employees/");
+  return response.data;
+}
+
+export async function getEmployee(id) {
+  const response = await api.get(`/employees/${id}/`);
+  return response.data;
+}
+
+export async function createEmployee(employee) {
+  const response = await api.post("/employees/", employee);
+  return response.data;
+}
+
+export async function updateEmployee(id, employee) {
+  const response = await api.put(`/employees/${id}/`, employee);
   return response.data;
 }
