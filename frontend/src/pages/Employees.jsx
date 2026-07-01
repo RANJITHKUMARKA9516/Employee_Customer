@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import SearchBar from "../components/employees/SearchBar";
 import EmployeeTable from "../components/employees/EmployeeTable";
@@ -8,15 +9,15 @@ function Employees() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredEmployees = useMemo(() => {
-    return employeeData.filter((employee) => {
-      const search = searchTerm.toLowerCase();
+    const search = searchTerm.trim().toLowerCase();
 
-      return (
-        employee.name.toLowerCase().includes(search) ||
-        employee.email.toLowerCase().includes(search) ||
-        employee.department.toLowerCase().includes(search)
-      );
-    });
+    if (!search) return employeeData;
+
+    return employeeData.filter((employee) =>
+      [employee.name, employee.email, employee.department].some((field) =>
+        field.toLowerCase().includes(search)
+      )
+    );
   }, [searchTerm]);
 
   return (
@@ -24,15 +25,17 @@ function Employees() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-4xl font-bold">Employees</h1>
-
           <p className="mt-2 text-gray-500">
             Manage all employees in your organization.
           </p>
         </div>
 
-        <button className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700">
+        <Link
+          to="/employees/add"
+          className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
+        >
           + Add Employee
-        </button>
+        </Link>
       </div>
 
       <div className="mb-6">

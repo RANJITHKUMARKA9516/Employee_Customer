@@ -9,6 +9,8 @@ import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 
+import AddEmployee from "../pages/AddEmployee";
+
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -17,6 +19,8 @@ function AppRoutes() {
           <Route path="/" element={<Dashboard />} />
 
           <Route path="/employees" element={<Employees />} />
+
+          <Route path="/employees/add" element={<AddEmployee />} />
 
           <Route path="/departments" element={<Departments />} />
 
