@@ -1,6 +1,9 @@
 import EmployeeRow from "./EmployeeRow";
 
-function EmployeeTable({ employees }) {
+function EmployeeTable({
+        employees,
+         onDelete,
+              }) {
   return (
     <div className="overflow-hidden rounded-xl bg-white shadow-md">
       <table className="w-full">
@@ -27,10 +30,11 @@ function EmployeeTable({ employees }) {
             </tr>
           ) : (
             employees.map((employee) => (
-              <EmployeeRow
-                key={employee.id}
-                employee={employee}
-              />
+             <EmployeeRow
+            key={employee.id}
+            employee={employee}
+                onDelete={onDelete}
+                            />
             ))
           )}
         </tbody>

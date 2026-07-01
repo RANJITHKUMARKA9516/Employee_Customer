@@ -1,6 +1,9 @@
 import EmployeeActions from "./EmployeeActions";
 
-function EmployeeRow({ employee }) {
+function EmployeeRow({
+  employee,
+  onDelete,
+}) {
   return (
     <tr className="border-b hover:bg-gray-50">
       <td className="p-4">{employee.id}</td>
@@ -30,7 +33,10 @@ function EmployeeRow({ employee }) {
       </td>
 
       <td className="p-4">
-        <EmployeeActions id={employee.id} />
+        <EmployeeActions
+           id={employee.id}
+             onDelete={onDelete}
+                                  />
       </td>
     </tr>
   );
