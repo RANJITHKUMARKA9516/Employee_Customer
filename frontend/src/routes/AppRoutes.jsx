@@ -8,35 +8,43 @@ import Departments from "../pages/Departments";
 import Settings from "../pages/Settings";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
-
 import AddEmployee from "../pages/AddEmployee";
 import EditEmployee from "../pages/EditEmployee";
+import Login from "../pages/Login";
+
+import ProtectedRoute from "./ProtectedRoute";
 
 function AppRoutes() {
   return (
     <BrowserRouter>
-      <DashboardLayout>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
+      <Routes>
+        {/* Public Route */}
+        <Route path="/login" element={<Login />} />
 
-          <Route path="/employees" element={<Employees />} />
-
-          <Route path="/employees/add" element={<AddEmployee />} />
-
-          <Route
-                path="/employees/edit/:id"
-                        element={<EditEmployee />}
-                                        />
-
-          <Route path="/departments" element={<Departments />} />
-
-          <Route path="/settings" element={<Settings />} />
-
-          <Route path="/profile" element={<Profile />} />
-
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </DashboardLayout>
+        {/* Protected Routes */}
+        <Route
+          path="/*"
+          element={
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Routes>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/employees" element={<Employees />} />
+                  <Route path="/employees/add" element={<AddEmployee />} />
+                  <Route
+                    path="/employees/edit/:id"
+                    element={<EditEmployee />}
+                  />
+                  <Route path="/departments" element={<Departments />} />
+                  <Route path="/settings" element={<Settings />} />
+                  <Route path="/profile" element={<Profile />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </DashboardLayout>
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
     </BrowserRouter>
   );
 }

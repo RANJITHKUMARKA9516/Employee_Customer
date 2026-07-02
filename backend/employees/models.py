@@ -1,6 +1,27 @@
 from django.db import models
 
 
+class Department(models.Model):
+    name = models.CharField(
+        max_length=100,
+        unique=True,
+    )
+
+    description = models.TextField(
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name
+
+
 class Employee(models.Model):
 
     STATUS_CHOICES = (
@@ -12,9 +33,35 @@ class Employee(models.Model):
 
     email = models.EmailField(unique=True)
 
-    department = models.CharField(max_length=100)
+    phone = models.CharField(
+        max_length=15,
+        blank=True,
+    )
+
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.PROTECT,
+        related_name="employees",
+    )
 
     designation = models.CharField(max_length=100)
+
+    salary = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
+
+    joining_date = models.DateField(
+        null=True,
+        blank=True,
+    )
+
+    photo = models.ImageField(
+        upload_to="employees/",
+        null=True,
+        blank=True,
+    )
 
     status = models.CharField(
         max_length=10,

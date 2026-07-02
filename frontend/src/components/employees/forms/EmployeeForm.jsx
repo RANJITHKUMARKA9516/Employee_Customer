@@ -1,7 +1,5 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { createEmployee } from "../../../services/employeeService";
 
 function EmployeeForm({
   initialData = null,
@@ -9,27 +7,42 @@ function EmployeeForm({
   buttonText = "Save Employee",
 }) {
   const {
-  register,
-  handleSubmit,
-  reset,
-  formState: { errors },
-} = useForm();
-  const navigate = useNavigate();
-  useEffect(() => {
-  if (initialData) {
-    reset(initialData);
-  }
-}, [initialData, reset]);
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
- const onSubmit = async (data) => {
-  await onSubmitForm(data);
-};
+  useEffect(() => {
+    if (initialData) {
+      reset(initialData);
+    }
+  }, [initialData, reset]);
+
+  const onSubmit = async (data) => {
+    await onSubmitForm(data);
+  };
 
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-6 rounded-xl bg-white p-8 shadow-md"
     >
+      {/* Photo */}
+      <div>
+        <label className="mb-2 block font-medium">
+          Employee Photo
+        </label>
+
+        <input
+          type="file"
+          accept="image/*"
+          {...register("photo")}
+          className="w-full rounded-lg border p-3"
+        />
+      </div>
+
+      {/* Name */}
       <div>
         <label className="mb-2 block font-medium">
           Full Name
@@ -50,6 +63,7 @@ function EmployeeForm({
         )}
       </div>
 
+      {/* Email */}
       <div>
         <label className="mb-2 block font-medium">
           Email
@@ -61,7 +75,7 @@ function EmployeeForm({
             required: "Email is required",
           })}
           className="w-full rounded-lg border p-3"
-          placeholder="Enter email"
+          placeholder="Enter employee email"
         />
 
         {errors.email && (
@@ -71,42 +85,97 @@ function EmployeeForm({
         )}
       </div>
 
+      {/* Phone */}
+      <div>
+        <label className="mb-2 block font-medium">
+          Phone Number
+        </label>
+
+        <input
+          type="text"
+          {...register("phone")}
+          className="w-full rounded-lg border p-3"
+          placeholder="Enter phone number"
+        />
+      </div>
+
+      {/* Department */}
       <div>
         <label className="mb-2 block font-medium">
           Department
         </label>
-        <div>
-  <label className="mb-2 block font-medium">
-    Designation
-  </label>
-
-  <input
-    {...register("designation", {
-      required: "Designation is required",
-    })}
-    className="w-full rounded-lg border p-3"
-    placeholder="Enter designation"
-  />
-
-  {errors.designation && (
-    <p className="mt-1 text-sm text-red-600">
-      {errors.designation.message}
-    </p>
-  )}
-</div>
 
         <select
-          {...register("department")}
+          {...register("department", {
+            required: "Department is required",
+          })}
           className="w-full rounded-lg border p-3"
         >
+          <option value="">Select Department</option>
           <option value="Development">Development</option>
           <option value="HR">HR</option>
           <option value="Finance">Finance</option>
           <option value="Marketing">Marketing</option>
           <option value="Sales">Sales</option>
         </select>
+
+        {errors.department && (
+          <p className="mt-1 text-sm text-red-600">
+            {errors.department.message}
+          </p>
+        )}
       </div>
 
+      {/* Designation */}
+      <div>
+        <label className="mb-2 block font-medium">
+          Designation
+        </label>
+
+        <input
+          {...register("designation", {
+            required: "Designation is required",
+          })}
+          className="w-full rounded-lg border p-3"
+          placeholder="Enter designation"
+        />
+
+        {errors.designation && (
+          <p className="mt-1 text-sm text-red-600">
+            {errors.designation.message}
+          </p>
+        )}
+      </div>
+
+      {/* Salary */}
+      <div>
+        <label className="mb-2 block font-medium">
+          Salary
+        </label>
+
+        <input
+          type="number"
+          step="0.01"
+          {...register("salary")}
+          className="w-full rounded-lg border p-3"
+          placeholder="Enter salary"
+        />
+      </div>
+
+      {/* Joining Date */}
+      <div>
+        <label className="mb-2 block font-medium">
+          Joining Date
+        </label>
+
+        <input
+          type="date"
+          {...register("joining_date")}
+          className="w-full rounded-lg border p-3"
+        />
+      </div>
+
+      {/* Status */}
       <div>
         <label className="mb-2 block font-medium">
           Status
@@ -121,9 +190,10 @@ function EmployeeForm({
         </select>
       </div>
 
+      {/* Submit */}
       <button
         type="submit"
-        className="rounded-lg bg-blue-600 px-6 py-3 text-white hover:bg-blue-700"
+        className="rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
       >
         {buttonText}
       </button>
