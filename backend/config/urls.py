@@ -41,9 +41,9 @@ urlpatterns = [
     ),
 
     path(
-        "api/employees/",
-        include("employees.urls"),
-    ),
+    "api/",
+    include("employees.urls"),
+),
 ]
 
 if settings.DEBUG:

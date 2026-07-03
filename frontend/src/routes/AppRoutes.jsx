@@ -13,6 +13,9 @@ import EditEmployee from "../pages/EditEmployee";
 import Login from "../pages/Login";
 
 import ProtectedRoute from "./ProtectedRoute";
+import AddDepartment from "../pages/AddDepartment";
+import EditDepartment from "../pages/EditDepartment";
+import EmployeeDetails from "../pages/EmployeeDetails";
 
 function AppRoutes() {
   return (
@@ -39,6 +42,19 @@ function AppRoutes() {
                   <Route path="/settings" element={<Settings />} />
                   <Route path="/profile" element={<Profile />} />
                   <Route path="*" element={<NotFound />} />
+                   <Route
+                     path="/departments/add"
+                                   element={<AddDepartment />}
+                                                                    />
+                   <Route
+                                             path="/departments/edit/:id"
+                                                            element={<EditDepartment />}
+                                              />
+                                              <Route
+  path="/employees/:id"
+  element={<EmployeeDetails />}
+/>
+                  
                 </Routes>
               </DashboardLayout>
             </ProtectedRoute>

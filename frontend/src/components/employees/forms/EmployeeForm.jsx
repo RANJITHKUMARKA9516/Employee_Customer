@@ -1,11 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+
+import { getDepartments } from "../../../services/departmentService";
 
 function EmployeeForm({
   initialData = null,
   onSubmitForm,
   buttonText = "Save Employee",
 }) {
+  const [departments, setDepartments] = useState([]);
+
   const {
     register,
     handleSubmit,
@@ -14,10 +18,23 @@ function EmployeeForm({
   } = useForm();
 
   useEffect(() => {
+    loadDepartments();
+  }, []);
+
+  useEffect(() => {
     if (initialData) {
       reset(initialData);
     }
   }, [initialData, reset]);
+
+  async function loadDepartments() {
+    try {
+      const data = await getDepartments();
+      setDepartments(data);
+    } catch (error) {
+      console.error("Failed to load departments:", error);
+    }
+  }
 
   const onSubmit = async (data) => {
     await onSubmitForm(data);
@@ -111,12 +128,18 @@ function EmployeeForm({
           })}
           className="w-full rounded-lg border p-3"
         >
-          <option value="">Select Department</option>
-          <option value="Development">Development</option>
-          <option value="HR">HR</option>
-          <option value="Finance">Finance</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Sales">Sales</option>
+          <option value="">
+            Select Department
+          </option>
+
+          {departments.map((department) => (
+            <option
+              key={department.id}
+              value={department.id}
+            >
+              {department.name}
+            </option>
+          ))}
         </select>
 
         {errors.department && (

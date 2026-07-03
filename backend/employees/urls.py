@@ -1,13 +1,28 @@
+from django.urls import include, path
+
 from rest_framework.routers import DefaultRouter
 
-from .views import EmployeeViewSet
+from .views import (
+    DepartmentViewSet,
+    EmployeeViewSet,
+    DashboardAPIView,
+)
 
 router = DefaultRouter()
 
 router.register(
-    "",
+    "employees",
     EmployeeViewSet,
-    basename="employee",
+    basename="employees",
 )
 
-urlpatterns = router.urls
+router.register(
+    "departments",
+    DepartmentViewSet,
+    basename="departments",
+)
+
+urlpatterns = [
+    path("", include(router.urls)),
+    path("dashboard/", DashboardAPIView.as_view()),
+]
