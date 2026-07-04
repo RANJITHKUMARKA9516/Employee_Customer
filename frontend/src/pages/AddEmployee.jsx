@@ -1,15 +1,41 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import EmployeeForm from "../components/employees/forms/EmployeeForm";
+import Loader from "../components/common/Loader";
+
 import { createEmployee } from "../services/employeeService";
+
+import {
+  showSuccess,
+  showError,
+} from "../utils/toast";
 
 function AddEmployee() {
   const navigate = useNavigate();
 
-  async function handleCreate(data) {
-    await createEmployee(data);
+  const [loading, setLoading] = useState(false);
 
-    navigate("/employees");
+  async function handleCreate(data) {
+    try {
+      setLoading(true);
+
+      await createEmployee(data);
+
+      showSuccess("Employee created successfully!");
+
+      navigate("/employees");
+    } catch (error) {
+      console.error(error);
+
+      showError("Failed to create employee.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  if (loading) {
+    return <Loader />;
   }
 
   return (

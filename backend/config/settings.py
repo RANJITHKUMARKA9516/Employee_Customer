@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     "core",
     "employees",
+     "accounts",
 ]
 
 MIDDLEWARE = [
@@ -162,3 +163,6 @@ SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
 }
+
+
+AUTH_USER_MODEL = "accounts.User"

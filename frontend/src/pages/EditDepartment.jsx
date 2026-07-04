@@ -8,6 +8,11 @@ import {
   updateDepartment,
 } from "../services/departmentService";
 
+import {
+  showSuccess,
+  showError,
+} from "../utils/toast";
+
 function EditDepartment() {
   const { id } = useParams();
 
@@ -25,6 +30,8 @@ function EditDepartment() {
       setDepartment(data);
     } catch (error) {
       console.error(error);
+
+      showError("Failed to load department.");
     }
   }
 
@@ -32,17 +39,22 @@ function EditDepartment() {
     try {
       await updateDepartment(id, data);
 
-      alert("Department updated successfully.");
+      showSuccess("Department updated successfully!");
 
       navigate("/departments");
     } catch (error) {
       console.error(error);
-      alert("Failed to update department.");
+
+      showError("Failed to update department.");
     }
   }
 
   if (!department) {
-    return <p>Loading...</p>;
+    return (
+      <div className="py-10 text-center">
+        Loading...
+      </div>
+    );
   }
 
   return (

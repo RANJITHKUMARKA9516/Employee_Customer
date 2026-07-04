@@ -7,6 +7,8 @@ import "./index.css";
 import AuthProvider from "./context/AuthContext";
 
 import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.createRoot(
   document.getElementById("root")
@@ -14,6 +16,11 @@ ReactDOM.createRoot(
   <React.StrictMode>
     <AuthProvider>
       <App />
+      <ToastContainer
+    position="top-right"
+    autoClose={3000}
+    theme="light"
+  />
 
       <Toaster
         position="top-right"

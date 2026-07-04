@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import EmployeeExport from "../components/employees/EmployeeExport";
 
 import EmployeeTable from "../components/employees/EmployeeTable";
 import EmployeeFilters from "../components/employees/EmployeeFilters";
@@ -172,24 +173,30 @@ function Employees() {
 
   return (
     <>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-4xl font-bold">
-            Employees
-          </h1>
+      <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+  <div>
+    <h1 className="text-4xl font-bold">
+      Employees
+    </h1>
 
-          <p className="mt-2 text-gray-500">
-            Manage all employees in your organization.
-          </p>
-        </div>
+    <p className="mt-2 text-gray-500">
+      Manage all employees in your organization.
+    </p>
+  </div>
 
-        <Link
-          to="/employees/add"
-          className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
-        >
-          + Add Employee
-        </Link>
-      </div>
+  <div className="flex flex-wrap gap-3">
+    <EmployeeExport
+      employees={sortedEmployees}
+    />
+
+    <Link
+      to="/employees/add"
+      className="rounded-lg bg-blue-600 px-6 py-3 text-white transition hover:bg-blue-700"
+    >
+      + Add Employee
+    </Link>
+  </div>
+</div>
 
       <EmployeeFilters
         searchTerm={searchTerm}
