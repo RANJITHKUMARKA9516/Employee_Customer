@@ -167,6 +167,5 @@ This project helped strengthen skills in:
 
 **Ranjith Kumar K A**
 
-* LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN_USERNAME
-* GitHub: https://github.com/YOUR_GITHUB_USERNAME
-* Portfolio: https://YOUR_PORTFOLIO_URL
+* LinkedIn:https://linkedin.com/in/YOUR_LINKEDIN_USERNAME](https://www.linkedin.com/feed/update/urn:li:activity:7480174337472335872/
+
